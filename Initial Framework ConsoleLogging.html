@@ -7,18 +7,34 @@
 </head>
 
 <body>
+  <div id="printSearch"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
-    // constructing a queryURL variable we will use instead of the literal string inside of the ajax method
-    var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=S5rMB2WoDW2gup4LOUdE1qfJtFcG3sIA";
+
+    var beginDate = "19200101";
+    var endDate = "19401231";
+
+
+    // var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=S5rMB2WoDW2gup4LOUdE1qfJtFcG3sIA";
+    var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=S5rMB2WoDW2gup4LOUdE1qfJtFcG3sIA&begin_date=" + beginDate + "&end_date=" + endDate;
 
     $.ajax({
       url: queryURL,
       method: "GET"
-    }).then(function(response) {
+    }).then(function (response) {
       console.log(response);
       console.log(response.status);
-      console.log(response.response.docs[0]);
+      console.log(response.response.docs[0].abstract);
+
+      for (i = 0; i < 5; i++) {
+        var headLine = response.response.docs[i].abstract;
+        console.log(headLine);
+
+        var screenWrite = document.createElement("p");
+        $(screenWrite).text(headLine);
+        $("#printSearch").append(screenWrite);
+      }
+
     });
 // ---------------------------------------------------------
 
