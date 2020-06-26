@@ -17,6 +17,7 @@
     var beginInput = "1920";
     var endInput = "1940";
     var searchTerm = "politics";
+    var numResults = 4
     beginDate = beginInput+"0101";
     endDate = endInput+"1231";
     //the query
@@ -31,7 +32,7 @@
       console.log(response.status);
       console.log(response.response.docs[0].abstract);
 
-      for (i = 0; i < 5; i++) {
+      for (i = 0; i < numResults; i++) {
         var headLine = response.response.docs[i].headline.main;
         var snipPet = response.response.docs[i].snippet;  
         var screenWrite = document.createElement("h1");
