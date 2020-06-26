@@ -10,14 +10,19 @@
   <div id="printSearch"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
+    //hardVariable dates for testing
 
-    var beginDate = "19200101";
-    var endDate = "19401231";
+    //needs variables passed to it:
+    // searchTerm, beginInput, endInput, numReturn
+    var beginInput = "1920";
+    var endInput = "1940";
+    var searchTerm = "politics";
+    beginDate = beginInput+"0101";
+    endDate = endInput+"1231";
+    //the query
+    var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q="+searchTerm+"&api-key=S5rMB2WoDW2gup4LOUdE1qfJtFcG3sIA&begin_date=" + beginDate + "&end_date=" + endDate;
 
-
-    // var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=S5rMB2WoDW2gup4LOUdE1qfJtFcG3sIA";
-    var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=S5rMB2WoDW2gup4LOUdE1qfJtFcG3sIA&begin_date=" + beginDate + "&end_date=" + endDate;
-
+    //the pull
     $.ajax({
       url: queryURL,
       method: "GET"
@@ -27,12 +32,15 @@
       console.log(response.response.docs[0].abstract);
 
       for (i = 0; i < 5; i++) {
-        var headLine = response.response.docs[i].abstract;
-        console.log(headLine);
-
-        var screenWrite = document.createElement("p");
+        var headLine = response.response.docs[i].headline.main;
+        var snipPet = response.response.docs[i].snippet;  
+        var screenWrite = document.createElement("h1");
+        var screenSnip = document.createElement("p");
+        
         $(screenWrite).text(headLine);
+        $(screenSnip).text(snipPet);
         $("#printSearch").append(screenWrite);
+        $(screenWrite).append(screenSnip);
       }
 
     });
